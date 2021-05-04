@@ -1,0 +1,37 @@
+---
+- name: sshd TCPKeepAlive no
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '^(.*)TCPKeepAlive(.*)$'
+    line: 'TCPKeepAlive no'
+- name: sshd ClientAliveInterval 30
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '^(.*)ClientAliveInterval(.*)$'
+    line: 'ClientAliveInterval 30'
+- name: sshd ClientAliveCountMax 1000
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '^(.*)ClientAliveCountMax(.*)$'
+    line: 'ClientAliveCountMax 1000'
+- name: terminfo
+  copy:
+    src: /usr/share/terminfo/a/alacritty
+    dest: /usr/share/terminfo/a/alacritty
+- name: terminfo
+  copy:
+    src: /usr/share/terminfo/a/alacritty+common
+    dest: /usr/share/terminfo/a/alacritty+common
+- name: terminfo
+  copy:
+    src: /usr/share/terminfo/a/alacritty-direct
+    dest: /usr/share/terminfo/a/alacritty-direct
+- name: install software
+  vars:
+    packages: [git,vim,neovim]
+  apt:
+    update_cache: yes
+    name: '{{item}}'
+    state: latest
+  with_items: '{{packages}}'
+  when: ansible_os_family == "Debian"

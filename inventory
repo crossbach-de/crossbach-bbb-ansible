@@ -1,0 +1,21 @@
+[all]
+master ansible_host=bbb.crossbach.de
+bbb01 ansible_host=bbb01.crossbach.de
+bbb02 ansible_host=bbb02.crossbach.de
+bbb03 ansible_host=bbb03.crossbach.de
+
+[bbb]
+bbb01
+bbb02
+bbb03
+
+[scalite]
+master
+
+[greenlight]
+master
+
+
+[all:vars]
+ansible_user = root
+ansible_private_key_file = ~/.ssh/id_rsa_dev
